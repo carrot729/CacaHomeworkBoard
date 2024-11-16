@@ -5,9 +5,9 @@ import logging
 
 # 默认配置设置，包括模板路径、作业路径和备份后缀
 DEFAULT_CONFIG = {
-    "template_path": ".\\template.docx",
-    "homework_path": "{0}\\Desktop\\homework.docx".format(os.environ['USERPROFILE']),
-    "backup_suffix": ".docx"
+    "template": ".\\template",
+    "homework": "{0}\\Desktop\\homework".format(os.environ['USERPROFILE']),
+    "suffix": ".docx"
 }
 
 # 设置文件名
@@ -18,6 +18,7 @@ config = {}
 logger = logging.getLogger(__name__)
 logger.setLevel(level = logging.INFO)
 handler = logging.FileHandler(LOG_FILE_NAME)
+#handler = logging.Handler()
 handler.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
@@ -40,14 +41,14 @@ def welcome() -> None:
 def read_config() -> None:
     """读取设置文件"""
     global config
-    logger.info('Reading config file...')
+    logger.info('Reading config file')
     with open(CONFIG_FILE_NAME, "r") as f:
         config = json.loads(f.read())
 
 def write_config() -> None:
     """初始化设置文件"""
     global config
-    logger.info('Initialing config file...')
+    logger.info('Initialing config file')
     config = DEFAULT_CONFIG
     with open(CONFIG_FILE_NAME, "w") as f:
         f.write(json.dumps(DEFAULT_CONFIG, sort_keys=True, indent=4, separators=(',', ': ')))
@@ -83,7 +84,7 @@ def make_backup(homework: str, backup: str) -> None:
             exit(0)
     if not os.path.exists('backup'):
         os.mkdir('backup')
-    logger.info('Making backup...')
+    logger.info('Making backup')
     copy_file(homework, backup)
 
 def make_homework(homework: str, template: str) -> None:
@@ -92,7 +93,7 @@ def make_homework(homework: str, template: str) -> None:
     :param homework: homework file
     :param template: template file
     """
-    logger.info('Making homework...')
+    logger.info('Making homework')
     copy_file(template, homework)
 
 def main():
@@ -103,8 +104,8 @@ def main():
         read_config()
     else:
         write_config()
-    make_backup(config['homework_path'], os.path.join('backup', f'{datetime.date.today()}{config["backup_suffix"]}'))
-    make_homework(config['homework_path'], config['template_path'])
+    make_backup(config['homework']+config['suffix'], os.path.join('backup', f'{datetime.date.today()}{config["suffix"]}'))
+    make_homework(config['homework']+config['suffix'], config['template']+config['suffix'])
 
 if __name__ == '__main__':
     main()
