@@ -36,8 +36,6 @@ def welcome() -> None:
 *************************************
     ''')
     print('Welcome to CacaHomeworkBoard.')
-    os.system("taskkill /f /t /im WINWORD.EXE")
-    logger.info(f"Killed WINWORD.EXE")
 
 def read_config() -> None:
     """读取设置文件"""
