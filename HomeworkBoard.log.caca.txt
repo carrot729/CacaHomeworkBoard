@@ -54,3 +54,4 @@
 2024-11-20 07:50:50,074 - __main__ - INFO - Reading config file
 2024-11-20 07:50:50,074 - __main__ - INFO - Making backup
 2024-11-20 07:50:50,074 - __main__ - INFO - Making homework
+2024-11-20 07:53:56,975 - __main__ - INFO - Reading config file
