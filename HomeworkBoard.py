@@ -1,4 +1,4 @@
-import datetime
+﻿import datetime
 import json
 import os
 import logging
@@ -109,3 +109,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    os.system('.\\GitSubmit.py')
